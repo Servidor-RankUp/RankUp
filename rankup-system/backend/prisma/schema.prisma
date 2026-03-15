@@ -4,16 +4,18 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Usuario {
-  id             Int           @id @default(autoincrement())
-  nomeUsuario    String        @unique
-  email          String        @unique
+  id             Int        @id @default(autoincrement())
+  nomeUsuario    String     @unique
+  email          String     @unique
+  senha          String
   discordId      String?
   ultimoLogin    DateTime?
-  ativo          Boolean       @default(true)
-  criadoEm       DateTime      @default(now())
+  ativo          Boolean    @default(true)
+  criadoEm       DateTime   @default(now())
   comprasVIP     CompraVIP[]
 }
 
