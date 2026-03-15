@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL")  // VOLTA com url para versão 5.22.0
 }
 
 model Usuario {
@@ -35,7 +35,7 @@ model CompraVIP {
   usuarioId       Int
   planoVIP        PlanoVIP      @relation(fields: [planoVIPId], references: [id])
   planoVIPId      Int
-  status          String        @default("pendente") // pendente | confirmado | cancelado
+  status          String        @default("pendente")
   idPagamento     String?
   metodoPagamento String?
   dadosPagamento  Json?
