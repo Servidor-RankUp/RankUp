@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id             Int           @id @default(autoincrement())
+  nomeUsuario    String        @unique
+  email          String        @unique
+  discordId      String?
+  ultimoLogin    DateTime?
+  ativo          Boolean       @default(true)
+  criadoEm       DateTime      @default(now())
+  comprasVIP     CompraVIP[]
+}
+
+model PlanoVIP {
+  id          Int           @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  duracao     Int
+  preco       Float
+  criadoEm    DateTime      @default(now())
+  compras     CompraVIP[]
+}
+
+model CompraVIP {
+  id              Int           @id @default(autoincrement())
+  usuario         Usuario       @relation(fields: [usuarioId], references: [id])
+  usuarioId       Int
+  planoVIP        PlanoVIP      @relation(fields: [planoVIPId], references: [id])
+  planoVIPId      Int
+  status          String        @default("pendente") // pendente | confirmado | cancelado
+  idPagamento     String?
+  metodoPagamento String?
+  dadosPagamento  Json?
+  ativadoEm       DateTime?
+  expiraEm        DateTime?
+  criadoEm        DateTime      @default(now())
+}
